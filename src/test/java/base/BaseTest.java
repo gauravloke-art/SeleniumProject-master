@@ -33,16 +33,16 @@ public class BaseTest {
 //        String browserName="edge";
         if(browserName.equalsIgnoreCase("chrome")) {
         	ChromeOptions options = new ChromeOptions();
+        	options.addArguments("user-data-dir=C:\\selenium-profile");
+        	options.addArguments("profile-directory=Default");
+        	options.addArguments("--start-maximized");
 
         	options.addArguments("--disable-blink-features=AutomationControlled");
-
-        	options.addArguments("--start-maximized");
 
         	options.setExperimentalOption("excludeSwitches",
         	        Arrays.asList("enable-automation"));
 
         	options.setExperimentalOption("useAutomationExtension", false);
-
         	driver = new ChromeDriver(options);;
 
         }
@@ -54,10 +54,11 @@ public class BaseTest {
             driver = new EdgeDriver();
         }
 
-        driver.get("https://www.jumia.com.eg");
         driver.manage().window().maximize();
-        //driver.manage().timeouts().implicitlyWait(Duration.ZERO.withSeconds(10));
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        System.out.println("opening URL");
+        driver.get("https://www.jumia.com.eg/");
+        System.out.println("URL Opened");
         basePage=new BasePage();
         basePage.setDriver(driver);
         homePage=new HomePage();
