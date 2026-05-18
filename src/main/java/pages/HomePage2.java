@@ -84,6 +84,15 @@ public void goToAbout() {
 	        "https://saucelabs.com/"
 	);
 	}
+public void goToAbout1() {
+	click(about);
+	String actualUrl = driver.getCurrentUrl();
+
+	Assert.assertEquals(
+	        actualUrl,
+	        "https://saucelabs.com/"
+	);
+	}
 	
 
 
