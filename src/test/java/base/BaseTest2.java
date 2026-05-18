@@ -12,17 +12,20 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import pages.AuthenticationPage;
+import pages.AuthenticationPage2;
 import pages.BasePage;
+import pages.BasePage2;
 import pages.HomePage;
+import pages.HomePage2;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-public class BaseTest {
+public class BaseTest2 {
     private WebDriver driver;
-    protected BasePage basePage;
-    protected HomePage homePage;
+    protected BasePage2 basePage2;
+    protected HomePage2 homePage2;
 
 
     @Parameters("browser")
@@ -57,11 +60,11 @@ public class BaseTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         System.out.println("opening URL");
-        driver.get("https://www.jumia.com.eg/");
+        driver.get("https://www.saucedemo.com/");
         System.out.println("URL Opened");
-        basePage=new BasePage();
-        basePage.setDriver(driver);
-        homePage=new HomePage();
+        basePage2=new BasePage2();
+        basePage2.setDriver(driver);
+        homePage2=new HomePage2();
     }
 
 
@@ -75,12 +78,13 @@ public class BaseTest {
      * @throws InterruptedException **************************/
     public void login() throws InterruptedException{
         //homePage.closePopUp();
-        AuthenticationPage authenticationPage=homePage.goToSignInPage();
-        authenticationPage.enterEmail("dfb66c5098a4@drmail.in");
-        var signInPage= authenticationPage.continueSigningIn();
-        signInPage.enterPassword("gETZKvbhZ9m#Tpa");
-        signInPage.completeSigningIn();
-        Assert.assertTrue(homePage.getAssertionText().contains("Hi, "));
+        AuthenticationPage2 AuthenticationPage2=new AuthenticationPage2();
+        AuthenticationPage2.enterEmail("standard_user");
+        AuthenticationPage2.enterPassword("secret_sauce");
+        AuthenticationPage2.continueSigningIn();
+        
+        
+        //Assert.assertTrue(homePage2.getAssertionText().contains("Hi, "));
     }
 
     /*********************DATAPROVIDERS**************************/
