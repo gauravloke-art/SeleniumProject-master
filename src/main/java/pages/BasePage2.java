@@ -13,7 +13,7 @@ public class BasePage2 {
     public static WebDriver driver;
 
     public void setDriver(WebDriver driver) {
-        this.driver = driver;
+        BasePage2.driver = driver;
     }
 
     /****Common Methods Used in Test Pages****/

@@ -23,6 +23,7 @@ private final By resetAppState =By.id("reset_sidebar_link");
 private final By filter=By.xpath("//select[@class='product_sort_container']");
 private final By filterAtoZ=By.xpath("//select[@class='product_sort_container']/option[1]");
 private final By listOfElements=By.xpath("//div[@class='inventory_item']");
+private final By logo=By.xpath("//div[@class='app_logo']");
 private final By firstProduct=By.xpath("//div[@class='inventory_item'][1]");
 private final By productName=By.xpath("//div[@class='inventory_item'][1]/div[2]/div/a/div");
 private final By productDescription=By.xpath("//div[@class='inventory_item'][1]/div[2]/div/div");
@@ -65,9 +66,18 @@ public void addToCart() {
 	Assert.assertTrue(((WebElement) removeBtn).isDisplayed());
 	
 	}
+public void removeFromCart() {
+	click(removeBtn);
+
+	
+	}
 
 public void goTocart() {
 	click(cart);
+	}
+public void sortAtoZ() {
+	click(filter);
+	click(filterAtoZ);
 	}
 
 public void logout() {
@@ -76,6 +86,7 @@ public void logout() {
 	}
 
 public void goToAbout() {
+	click(menu);
 	click(about);
 	String actualUrl = driver.getCurrentUrl();
 
@@ -83,6 +94,7 @@ public void goToAbout() {
 	        actualUrl,
 	        "https://saucelabs.com/"
 	);
+	driver.navigate().back();
 	}
 public void goToAbout1() {
 	click(about);
@@ -93,8 +105,26 @@ public void goToAbout1() {
 	        "https://saucelabs.com/"
 	);
 	}
-	
+public void verifyproductIsAvailable() {
+	//click(addTocart);
+	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(firstProduct)
+	        );
+	Assert.assertTrue(((WebElement) firstProduct).isDisplayed());
+	
+	}
+public void verifylogoIsAvailable() {
+	//click(addTocart);
+	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(logo)
+	        );
+	Assert.assertTrue(((WebElement) logo).isDisplayed());
+	
+	}
 
 
 

@@ -26,6 +26,7 @@ public class BaseTest2 {
     private WebDriver driver;
     protected BasePage2 basePage2;
     protected HomePage2 homePage2;
+    AuthenticationPage2 Authenticationpage2=new AuthenticationPage2();
 
 
     @Parameters("browser")
@@ -62,9 +63,15 @@ public class BaseTest2 {
         System.out.println("opening URL");
         driver.get("https://www.saucedemo.com/");
         System.out.println("URL Opened");
+        Authenticationpage2.enterEmail("standard_user");
+        System.out.println("EmailEntered");
+        Authenticationpage2.enterPassword("secret_sauce");
+        Authenticationpage2.clickOnLogin();
         basePage2=new BasePage2();
         basePage2.setDriver(driver);
         homePage2=new HomePage2();
+        Authenticationpage2.waitToLoad();
+        System.out.println("wait");
     }
 
 
@@ -78,10 +85,12 @@ public class BaseTest2 {
      * @throws InterruptedException **************************/
     public void login() throws InterruptedException{
         //homePage.closePopUp();
-        AuthenticationPage2 AuthenticationPage2=new AuthenticationPage2();
-        AuthenticationPage2.enterEmail("standard_user");
-        AuthenticationPage2.enterPassword("secret_sauce");
-        AuthenticationPage2.continueSigningIn();
+    	System.out.println("opening URL");
+        //AuthenticationPage2 Authenticationpage2=new AuthenticationPage2();
+        Authenticationpage2.enterEmail("standard_user");
+        System.out.println("EmailEntered");
+        Authenticationpage2.enterPassword("secret_sauce");
+        Authenticationpage2.clickOnLogin();
         
         
         //Assert.assertTrue(homePage2.getAssertionText().contains("Hi, "));

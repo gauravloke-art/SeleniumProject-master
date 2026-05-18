@@ -1,6 +1,10 @@
 package pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AuthenticationPage2 extends BasePage {
     private final By emailField=By.id("user-name");
@@ -18,9 +22,9 @@ public class AuthenticationPage2 extends BasePage {
     public void enterWrongPassword(String password){
         sendKeys(passwordField,password);
     }
-    public SignUpPage continueSigningUp(){
+    public void clickOnLogin(){
     click(loginBtn);
-    return new SignUpPage();
+    //return new SignUpPage();
     }
     public SignInPage continueSigningIn(){
         click(loginBtn);
@@ -32,4 +36,9 @@ public class AuthenticationPage2 extends BasePage {
     public String getEmptyEmailText(){
         return getText(emptyEmailMessage);
     }
+    public void waitToLoad(){
+    	WebDriverWait wait= new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(emailField)));
+    }
+   
 }
