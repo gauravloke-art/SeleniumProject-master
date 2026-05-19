@@ -6,34 +6,35 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
-import pages.AuthenticationPage;
 import pages.AuthenticationPage2;
-import pages.BasePage;
 import pages.BasePage2;
-import pages.HomePage;
 import pages.HomePage2;
 
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 public class BaseTest2 {
-    private WebDriver driver;
-    protected BasePage2 basePage2;
+    //protected WebDriver driver;
+    //BasePage2 basePage = new BasePage2(driver);
+    //HomePage2 homePage2 = new HomePage2(driver);
+
+    //AuthenticationPage2 Authenticationpage2 =new AuthenticationPage2(driver);
+    protected WebDriver driver;
+
+    protected BasePage2 basePage;
     protected HomePage2 homePage2;
-    AuthenticationPage2 Authenticationpage2=new AuthenticationPage2();
+    protected AuthenticationPage2 Authenticationpage2;
 
 
     @Parameters("browser")
     @BeforeMethod
     public void setUp(String browserName)    {
  //        ChromeOptions options=new ChromeOptions();
-//        options.addArguments("headless");
+//        option.addArguments("headless");
 //        String browserName="edge";
         if(browserName.equalsIgnoreCase("chrome")) {
         	ChromeOptions options = new ChromeOptions();
@@ -63,14 +64,20 @@ public class BaseTest2 {
         System.out.println("opening URL");
         driver.get("https://www.saucedemo.com/");
         System.out.println("URL Opened");
-        Authenticationpage2.enterEmail("standard_user");
-        System.out.println("EmailEntered");
-        Authenticationpage2.enterPassword("secret_sauce");
-        Authenticationpage2.clickOnLogin();
-        basePage2=new BasePage2();
-        basePage2.setDriver(driver);
-        homePage2=new HomePage2();
-        Authenticationpage2.waitToLoad();
+        basePage = new BasePage2(driver);
+
+        homePage2 = new HomePage2(driver);
+
+        Authenticationpage2 =
+                new AuthenticationPage2(driver);
+        //Authenticationpage2.enterEmail("standard_user");
+        //System.out.println("EmailEntered");
+        //Authenticationpage2.enterPassword("secret_sauce");
+        //Authenticationpage2.clickOnLogin();
+        //basePage2=new BasePage2();
+        //basePage2.setDriver(driver);
+       // homePage2=new HomePage2();
+       // Authenticationpage2.waitToLoad();
         System.out.println("wait");
     }
 

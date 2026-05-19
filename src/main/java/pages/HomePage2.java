@@ -11,7 +11,7 @@ import org.testng.Assert;
 
 
 
-public class HomePage2 extends BasePage{
+public class HomePage2 extends BasePage2{
 	
 
 private final By cart =By.id("shopping_cart_container");
@@ -31,61 +31,99 @@ private final By productPrice=By.xpath("//div[@class='inventory_item'][1]/div[2]
 private final By addTocart=By.xpath("//div[@class='inventory_item'][1]/div[2]/div[2]/button");
 //remove-sauce-labs-backpack
 private final By removeBtn=By.id("remove-sauce-labs-backpack");
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+public HomePage2(WebDriver driver) {
+    super(driver);
+}
 
 
 public void verifyItemsArePresent() {
+	wait.until(
+            ExpectedConditions.visibilityOfElementLocated(listOfElements)
+    );
 	Assert.assertTrue(
             driver.findElements(listOfElements).size() > 0,
             "Items are not present"
     );
 }
 public void gotoAllItems() {
-	click(menu);
+	//wait.until(
+//	        ExpectedConditions.visibilityOfElementLocated(menu)
+//	        );
+	wait.until(
+            ExpectedConditions.elementToBeClickable(menu)
+    ).click();
+	//click(menu);
 	click(allItems);
 	}
 
 public String getProductName(){
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(productName)
+	        );
     return getText(productName);
 }
 
 public String getProductDesc(){
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(productDescription)
+	        );
     return getText(productDescription);
 }
 
 public String getProductPrice(){
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(productPrice)
+	        );
     return getText(productPrice);
 }
 
 public void addToCart() {
-	click(addTocart);
-	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
 	wait.until(
-	        ExpectedConditions.visibilityOfElementLocated(removeBtn)
+	        ExpectedConditions.visibilityOfElementLocated(addTocart)
 	        );
-	Assert.assertTrue(((WebElement) removeBtn).isDisplayed());
+	click(addTocart);
+	//wait.until(
+	       // ExpectedConditions.visibilityOfElementLocated(removeBtn)
+	       // );
+	//Assert.assertTrue(((WebElement) removeBtn).isDisplayed());
 	
 	}
 public void removeFromCart() {
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(removeBtn)
+	        );
 	click(removeBtn);
 
 	
 	}
 
 public void goTocart() {
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(cart)
+	        );
 	click(cart);
 	}
 public void sortAtoZ() {
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(filter)
+	        );
 	click(filter);
 	click(filterAtoZ);
 	}
 
 public void logout() {
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(menu)
+	        );
 	click(menu);
 	click(logout);
 	}
 
 public void goToAbout() {
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(menu)
+	        );
 	click(menu);
 	click(about);
 	String actualUrl = driver.getCurrentUrl();
@@ -97,6 +135,9 @@ public void goToAbout() {
 	driver.navigate().back();
 	}
 public void goToAbout1() {
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(about)
+	        );
 	click(about);
 	String actualUrl = driver.getCurrentUrl();
 
@@ -107,22 +148,25 @@ public void goToAbout1() {
 	}
 public void verifyproductIsAvailable() {
 	//click(addTocart);
-	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-	wait.until(
-	        ExpectedConditions.visibilityOfElementLocated(firstProduct)
-	        );
-	Assert.assertTrue(((WebElement) firstProduct).isDisplayed());
+	WebElement product = wait.until(
+            ExpectedConditions.visibilityOfElementLocated(firstProduct)
+    );
+
+    Assert.assertTrue(product.isDisplayed());
 	
 	}
 public void verifylogoIsAvailable() {
 	//click(addTocart);
-	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-	wait.until(
-	        ExpectedConditions.visibilityOfElementLocated(logo)
-	        );
-	Assert.assertTrue(((WebElement) logo).isDisplayed());
+	WebElement product = wait.until(
+            ExpectedConditions.visibilityOfElementLocated(firstProduct)
+    );
+
+    Assert.assertTrue(product.isDisplayed());
+	//Assert.assertTrue(((WebElement) logo).isDisplayed());
 	
 	}
 

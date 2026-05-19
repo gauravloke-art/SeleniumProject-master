@@ -10,11 +10,11 @@ import java.time.Duration;
 
 public class BasePage2 {
 
-    public static WebDriver driver;
+	 protected WebDriver driver;
 
-    public void setDriver(WebDriver driver) {
-        BasePage2.driver = driver;
-    }
+	    public BasePage2(WebDriver driver) {
+	        this.driver = driver;
+	    }
 
     /****Common Methods Used in Test Pages****/
     protected WebElement find(By locator){
