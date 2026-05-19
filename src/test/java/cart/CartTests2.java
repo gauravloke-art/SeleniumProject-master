@@ -40,8 +40,8 @@ public class CartTests2 extends BaseTest2 {
         homePage2.verifyItemsArePresent();
         homePage2.verifyproductIsAvailable();
         System.out.println(homePage2.getProductName());
-        homePage2.getProductDesc();
-        homePage2.getProductPrice();
+        System.out.println(homePage2.getProductDesc());
+        System.out.println(homePage2.getProductPrice());
         }
     @Test(priority = 6)
     public void addToCart_Remove() throws InterruptedException{
@@ -92,9 +92,9 @@ public class CartTests2 extends BaseTest2 {
         //homePage2.gotoAllItems();
         homePage2.verifyItemsArePresent();
         homePage2.verifyproductIsAvailable();
-        homePage2.getProductName();
-        homePage2.getProductDesc();
-        homePage2.getProductPrice();
+        System.out.println(homePage2.getProductName());
+        System.out.println(homePage2.getProductDesc());
+        System.out.println(homePage2.getProductPrice());
         }
     @Test(priority = 13)
     public void addToCart_Remove1() throws InterruptedException{

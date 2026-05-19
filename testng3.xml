@@ -4,7 +4,7 @@
 
 <suite name="Suite">
 
-    <parameter name="browser" value="chrome"/>
+    <parameter name="browser" value="edge"/>
 
     <test name="Tests">
 
@@ -16,6 +16,9 @@
                 
             </class>
             <class name="cart.CartTests3">
+                
+            </class>
+            <class name="cart.CartTests4">
                 
             </class>
             

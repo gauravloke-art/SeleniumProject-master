@@ -4,7 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -13,6 +16,7 @@ import pages.AuthenticationPage2;
 import pages.BasePage2;
 import pages.HomePage2;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,40 +39,66 @@ public class BaseTest2 {
 	public void setUp(String browserName) {
 		if (browserName.equalsIgnoreCase("chrome")) {
 			ChromeOptions options = new ChromeOptions();
-
 			// Custom Chrome profile
 			options.addArguments("user-data-dir=C:\\selenium-profile");
 			options.addArguments("profile-directory=Default");
-
 			// Browser settings
 			options.addArguments("--start-maximized");
 			// Disable automation detection
 			options.addArguments("--disable-blink-features=AutomationControlled");
-
 			options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
-
 			options.setExperimentalOption("useAutomationExtension", false);
-
 			// Disable password manager & security popups
 			Map<String, Object> prefs = new HashMap<>();
-
 			prefs.put("credentials_enable_service", false);
-
 			prefs.put("profile.password_manager_enabled", false);
-
 			prefs.put("profile.password_manager_leak_detection", false);
-
 			prefs.put("profile.default_content_setting_values.notifications", 2);
-
 			options.setExperimentalOption("prefs", prefs);
-
 			driver = new ChromeDriver(options);
 
 		} else if (browserName.equalsIgnoreCase("firefox")) {
-			driver = new FirefoxDriver();
+			FirefoxOptions options = new FirefoxOptions();
+		    // Custom Firefox profile
+		    FirefoxProfile profile = new FirefoxProfile(
+		            new File("C:\\selenium-profile-firefox"));
+		    // Disable notifications
+		    profile.setPreference("dom.webnotifications.enabled", false);
+		    // Disable password manager
+		    profile.setPreference("signon.rememberSignons", false);
+		    // Disable autofill
+		    profile.setPreference("browser.formfill.enable", false);
+		    // Disable automation flag (limited support compared to Chrome)
+		    profile.setPreference("dom.webdriver.enabled", false);
+		    options.setProfile(profile);
+		    // Start maximized
+		    options.addArguments("--start-maximized");
+		    driver = new FirefoxDriver(options);
 
 		} else if (browserName.equalsIgnoreCase("edge")) {
-			driver = new EdgeDriver();
+			System.setProperty(
+			        "webdriver.edge.driver",
+			        "C:\\drivers\\msedgedriver.exe"
+			    );
+			EdgeOptions options = new EdgeOptions();
+		    // Custom Edge profile
+		    options.addArguments("user-data-dir=C:\\selenium-profile-edge");
+		    options.addArguments("profile-directory=Default");
+		    // Browser settings
+		    options.addArguments("--start-maximized");
+		    // Disable automation detection
+		    options.addArguments("--disable-blink-features=AutomationControlled");
+		    options.setExperimentalOption("excludeSwitches",
+		            Arrays.asList("enable-automation"));
+		    options.setExperimentalOption("useAutomationExtension", false);
+		    // Disable password manager & notifications
+		    Map<String, Object> prefs = new HashMap<>();
+		    prefs.put("credentials_enable_service", false);
+		    prefs.put("profile.password_manager_enabled", false);
+		    prefs.put("profile.password_manager_leak_detection", false);
+		    prefs.put("profile.default_content_setting_values.notifications", 2);
+		    options.setExperimentalOption("prefs", prefs);
+		    driver = new EdgeDriver(options);
 		}
 
 		driver.manage().window().maximize();
@@ -77,9 +107,7 @@ public class BaseTest2 {
 		driver.get("https://www.saucedemo.com/");
 		System.out.println("URL Opened");
 		basePage2 = new BasePage2(driver);
-
 		homePage2 = new HomePage2(driver);
-
 		Authenticationpage2 = new AuthenticationPage2(driver);
 		// Authenticationpage2.enterEmail("standard_user");
 		// System.out.println("EmailEntered");

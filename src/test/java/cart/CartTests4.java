@@ -6,7 +6,7 @@ import pages.HomePage2;
 
 import org.testng.annotations.Test;
 
-public class CartTests3 extends BaseTest2 {
+public class CartTests4 extends BaseTest2 {
 	//HomePage2 homePage2 = new HomePage2(driver);
 	
 	//AuthenticationPage2 Authenticationpage2=new AuthenticationPage2(driver);
