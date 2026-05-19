@@ -61,5 +61,26 @@ public class AuthenticationPage2 extends BasePage2 {
     	        ExpectedConditions.visibilityOfElementLocated(cart)
     	        );
     }
+    public void verifyInvalidLogin() {
+
+        sendKeys(emailField, "standard");
+        sendKeys(passwordField, "secret_sauce");
+
+        click(loginBtn);
+
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        invalidEmailMessage
+                )
+        );
+
+        String errorMessage= getText(invalidEmailMessage);
+        System.out.println("Error message is ==>" +errorMessage);
+        
+    }}
    
-}
+   
+

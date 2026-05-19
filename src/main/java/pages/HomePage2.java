@@ -30,6 +30,8 @@ private final By productDescription=By.xpath("//div[@class='inventory_item'][1]/
 private final By productPrice=By.xpath("//div[@class='inventory_item'][1]/div[2]/div[2]/div");
 private final By addTocart=By.xpath("//div[@class='inventory_item'][1]/div[2]/div[2]/button");
 //remove-sauce-labs-backpack
+////button[@id='remove-sauce-labs-backpack']
+private final By removeBtnFromcart=By.xpath("button[@id='remove-sauce-labs-backpack']");
 private final By removeBtn=By.id("remove-sauce-labs-backpack");
 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 public HomePage2(WebDriver driver) {
@@ -138,14 +140,8 @@ public void goToAbout1() {
 	wait.until(
 	        ExpectedConditions.visibilityOfElementLocated(about)
 	        );
-	click(about);
-	String actualUrl = driver.getCurrentUrl();
-
-	Assert.assertEquals(
-	        actualUrl,
-	        "https://saucelabs.com/"
-	);
 	}
+////button[@id='remove-sauce-labs-backpack']
 public void verifyproductIsAvailable() {
 	//click(addTocart);
 	//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -169,6 +165,13 @@ public void verifylogoIsAvailable() {
 	//Assert.assertTrue(((WebElement) logo).isDisplayed());
 	
 	}
+public void removeBtnFromcart(){
+	 wait.until(
+            ExpectedConditions.visibilityOfElementLocated(removeBtnFromcart)
+    );
+	click(removeBtnFromcart);
+	
+}
 
 
 

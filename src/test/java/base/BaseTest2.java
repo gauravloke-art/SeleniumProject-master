@@ -1,6 +1,5 @@
 package base;
 
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -16,123 +15,135 @@ import pages.HomePage2;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BaseTest2 {
-    //protected WebDriver driver;
-    //BasePage2 basePage = new BasePage2(driver);
-    //HomePage2 homePage2 = new HomePage2(driver);
+	// protected WebDriver driver;
+	// BasePage2 basePage = new BasePage2(driver);
+	// HomePage2 homePage2 = new HomePage2(driver);
 
-    //AuthenticationPage2 Authenticationpage2 =new AuthenticationPage2(driver);
-    protected WebDriver driver;
+	// AuthenticationPage2 Authenticationpage2 =new AuthenticationPage2(driver);
+	protected WebDriver driver;
 
-    protected BasePage2 basePage;
-    protected HomePage2 homePage2;
-    protected AuthenticationPage2 Authenticationpage2;
+	protected BasePage2 basePage2;
+	protected HomePage2 homePage2;
+	protected AuthenticationPage2 Authenticationpage2;
 
+	@Parameters("browser")
+	@BeforeMethod
+	public void setUp(String browserName) {
+		if (browserName.equalsIgnoreCase("chrome")) {
+			ChromeOptions options = new ChromeOptions();
 
-    @Parameters("browser")
-    @BeforeMethod
-    public void setUp(String browserName)    {
- //        ChromeOptions options=new ChromeOptions();
-//        option.addArguments("headless");
-//        String browserName="edge";
-        if(browserName.equalsIgnoreCase("chrome")) {
-        	ChromeOptions options = new ChromeOptions();
-        	options.addArguments("user-data-dir=C:\\selenium-profile");
-        	options.addArguments("profile-directory=Default");
-        	options.addArguments("--start-maximized");
+			// Custom Chrome profile
+			options.addArguments("user-data-dir=C:\\selenium-profile");
+			options.addArguments("profile-directory=Default");
 
-        	options.addArguments("--disable-blink-features=AutomationControlled");
+			// Browser settings
+			options.addArguments("--start-maximized");
+			// Disable automation detection
+			options.addArguments("--disable-blink-features=AutomationControlled");
 
-        	options.setExperimentalOption("excludeSwitches",
-        	        Arrays.asList("enable-automation"));
+			options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
 
-        	options.setExperimentalOption("useAutomationExtension", false);
-        	driver = new ChromeDriver(options);;
+			options.setExperimentalOption("useAutomationExtension", false);
 
-        }
-        else if (browserName.equalsIgnoreCase("firefox")) {
-            driver = new FirefoxDriver();
+			// Disable password manager & security popups
+			Map<String, Object> prefs = new HashMap<>();
 
-        }
-        else if (browserName.equalsIgnoreCase("edge")) {
-            driver = new EdgeDriver();
-        }
+			prefs.put("credentials_enable_service", false);
 
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        System.out.println("opening URL");
-        driver.get("https://www.saucedemo.com/");
-        System.out.println("URL Opened");
-        basePage = new BasePage2(driver);
+			prefs.put("profile.password_manager_enabled", false);
 
-        homePage2 = new HomePage2(driver);
+			prefs.put("profile.password_manager_leak_detection", false);
 
-        Authenticationpage2 =
-                new AuthenticationPage2(driver);
-        //Authenticationpage2.enterEmail("standard_user");
-        //System.out.println("EmailEntered");
-        //Authenticationpage2.enterPassword("secret_sauce");
-        //Authenticationpage2.clickOnLogin();
-        //basePage2=new BasePage2();
-        //basePage2.setDriver(driver);
-       // homePage2=new HomePage2();
-       // Authenticationpage2.waitToLoad();
-        System.out.println("wait");
-    }
+			prefs.put("profile.default_content_setting_values.notifications", 2);
 
+			options.setExperimentalOption("prefs", prefs);
 
-    @AfterMethod
-    public void tearDown(){
-        driver.quit();
-    }
+			driver = new ChromeDriver(options);
 
+		} else if (browserName.equalsIgnoreCase("firefox")) {
+			driver = new FirefoxDriver();
 
-    /*********************LOGIN
-     * @throws InterruptedException **************************/
-    public void login() throws InterruptedException{
-        //homePage.closePopUp();
-    	System.out.println("opening URL");
-        //AuthenticationPage2 Authenticationpage2=new AuthenticationPage2();
-        Authenticationpage2.enterEmail("standard_user");
-        System.out.println("EmailEntered");
-        Authenticationpage2.enterPassword("secret_sauce");
-        Authenticationpage2.clickOnLogin();
-        
-        
-        //Assert.assertTrue(homePage2.getAssertionText().contains("Hi, "));
-    }
+		} else if (browserName.equalsIgnoreCase("edge")) {
+			driver = new EdgeDriver();
+		}
 
-    /*********************DATAPROVIDERS**************************/
-    @DataProvider
-    public Object [][] getData(){
-        Object[][] data=new Object[2][2];
-        data[0][0]="12345";
-        data[0][1]="12345";
-        data[1][0]="#$@#!";
-        data[1][1]="#$@#!";
-        return data;
-    }
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		System.out.println("opening URL");
+		driver.get("https://www.saucedemo.com/");
+		System.out.println("URL Opened");
+		basePage2 = new BasePage2(driver);
 
-    @DataProvider(name = "search")
-    public Object [][] searchField(){
-        Object[][] data=new Object[4][1];
-        data[0][0]="jeans";
-        data[1][0]="table";
-        data[2][0]="watch";
-        data[3][0]="كتاب";
+		homePage2 = new HomePage2(driver);
 
-        return data;
-    }
+		Authenticationpage2 = new AuthenticationPage2(driver);
+		// Authenticationpage2.enterEmail("standard_user");
+		// System.out.println("EmailEntered");
+		// Authenticationpage2.enterPassword("secret_sauce");
+		// Authenticationpage2.clickOnLogin();
+		// basePage2=new BasePage2();
+		// basePage2.setDriver(driver);
+		// homePage2=new HomePage2();
+		// Authenticationpage2.waitToLoad();
+		System.out.println("wait");
+	}
 
-    @DataProvider(name = "newsletter")
-    public Object [][] newsLetterField(){
-        Object[][] data=new Object[2][2];
-        data[0][0]="0254a7120b67@drmail.in";
-        data[0][1]="male";
-        data[1][0]="d8c0a286b126@drmail.in";
-        data[1][1]="female";
+	@AfterMethod
+	public void tearDown() {
+		driver.quit();
+	}
 
-        return data;
-    }
+	/*********************
+	 * LOGIN
+	 * 
+	 * @throws InterruptedException
+	 **************************/
+	public void login() throws InterruptedException {
+		// homePage.closePopUp();
+		System.out.println("opening URL");
+		// AuthenticationPage2 Authenticationpage2=new AuthenticationPage2();
+		Authenticationpage2.enterEmail("standard_user");
+		System.out.println("EmailEntered");
+		Authenticationpage2.enterPassword("secret_sauce");
+		Authenticationpage2.clickOnLogin();
+
+		// Assert.assertTrue(homePage2.getAssertionText().contains("Hi, "));
+	}
+
+	/********************* DATAPROVIDERS **************************/
+	@DataProvider
+	public Object[][] getData() {
+		Object[][] data = new Object[2][2];
+		data[0][0] = "12345";
+		data[0][1] = "12345";
+		data[1][0] = "#$@#!";
+		data[1][1] = "#$@#!";
+		return data;
+	}
+
+	@DataProvider(name = "search")
+	public Object[][] searchField() {
+		Object[][] data = new Object[4][1];
+		data[0][0] = "jeans";
+		data[1][0] = "table";
+		data[2][0] = "watch";
+		data[3][0] = "كتاب";
+
+		return data;
+	}
+
+	@DataProvider(name = "newsletter")
+	public Object[][] newsLetterField() {
+		Object[][] data = new Object[2][2];
+		data[0][0] = "0254a7120b67@drmail.in";
+		data[0][1] = "male";
+		data[1][0] = "d8c0a286b126@drmail.in";
+		data[1][1] = "female";
+
+		return data;
+	}
 }
