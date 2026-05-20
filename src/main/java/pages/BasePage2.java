@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,7 +11,13 @@ import java.time.Duration;
 
 public class BasePage2 {
 
-	 protected WebDriver driver;
+	// public static WebDriver driver;
+
+	    //public BasePage2(WebDriver driver) {
+	     //   BasePage2.driver = driver;
+	   // }
+
+	    protected WebDriver driver;
 
 	    public BasePage2(WebDriver driver) {
 	        this.driver = driver;
@@ -41,5 +48,10 @@ public class BasePage2 {
         WebDriverWait wait= new WebDriverWait(driver, Duration.ofSeconds(duration));
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(locator)));
     }
+
+	public static TakesScreenshot getDriver() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -31,8 +31,8 @@ private final By productPrice=By.xpath("//div[@class='inventory_item'][1]/div[2]
 private final By addTocart=By.xpath("//div[@class='inventory_item'][1]/div[2]/div[2]/button");
 //remove-sauce-labs-backpack
 ////button[@id='remove-sauce-labs-backpack']
-private final By removeBtnFromcart=By.xpath("button[@id='remove-sauce-labs-backpack']");
-private final By removeBtn=By.id("remove-sauce-labs-backpack");
+private final By removeBtnFromcart=By.xpath("//button[@id='remove-sauce-labs-backpack']");
+private final By removeBtn=By.xpath("//button[@id='remove-sauce-labs-backpack']");
 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 public HomePage2(WebDriver driver) {
     super(driver);
@@ -157,11 +157,11 @@ public void verifylogoIsAvailable() {
 	//click(addTocart);
 	//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-	WebElement product = wait.until(
-            ExpectedConditions.visibilityOfElementLocated(firstProduct)
+	WebElement logo1 = wait.until(
+            ExpectedConditions.visibilityOfElementLocated(logo)
     );
 
-    Assert.assertTrue(product.isDisplayed());
+    Assert.assertTrue(logo1.isDisplayed());
 	//Assert.assertTrue(((WebElement) logo).isDisplayed());
 	
 	}

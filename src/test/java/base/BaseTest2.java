@@ -9,12 +9,20 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+
 import pages.AuthenticationPage2;
 import pages.BasePage2;
 import pages.HomePage2;
+import report.ExtentReportNG2;
+import ss.TakeScreenShot2;
 
 import java.io.File;
 import java.time.Duration;
@@ -28,22 +36,33 @@ public class BaseTest2 {
 	// HomePage2 homePage2 = new HomePage2(driver);
 
 	// AuthenticationPage2 Authenticationpage2 =new AuthenticationPage2(driver);
-	protected WebDriver driver;
-
+	//protected WebDriver driver;
+	public static ExtentReports extent1;
+	public static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+	private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 	protected BasePage2 basePage2;
 	protected HomePage2 homePage2;
+	
 	protected AuthenticationPage2 Authenticationpage2;
-
+	public static WebDriver getDriver()
+    {
+        return tlDriver.get();
+    }
+	@BeforeSuite
+	public void startReport()
+	{
+	    extent1 = ExtentReportNG2.getReportObject();
+	}
 	@Parameters("browser")
 	@BeforeMethod
 	public void setUp(String browserName) {
 		if (browserName.equalsIgnoreCase("chrome")) {
 			ChromeOptions options = new ChromeOptions();
 			// Custom Chrome profile
-			options.addArguments("user-data-dir=C:\\selenium-profile");
-			options.addArguments("profile-directory=Default");
+			//options.addArguments("user-data-dir=C:\\selenium-profile");
+			//options.addArguments("profile-directory=Default");
 			// Browser settings
-			options.addArguments("--start-maximized");
+			//options.addArguments("--start-maximized");
 			// Disable automation detection
 			options.addArguments("--disable-blink-features=AutomationControlled");
 			options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
@@ -55,7 +74,8 @@ public class BaseTest2 {
 			prefs.put("profile.password_manager_leak_detection", false);
 			prefs.put("profile.default_content_setting_values.notifications", 2);
 			options.setExperimentalOption("prefs", prefs);
-			driver = new ChromeDriver(options);
+			tlDriver.set(new ChromeDriver(options));
+			//driver = new ChromeDriver(options);
 
 		} else if (browserName.equalsIgnoreCase("firefox")) {
 			FirefoxOptions options = new FirefoxOptions();
@@ -73,19 +93,20 @@ public class BaseTest2 {
 		    options.setProfile(profile);
 		    // Start maximized
 		    options.addArguments("--start-maximized");
-		    driver = new FirefoxDriver(options);
+		    tlDriver.set(new FirefoxDriver(options));
+		    //driver = new FirefoxDriver(options);
 
 		} else if (browserName.equalsIgnoreCase("edge")) {
 			System.setProperty(
 			        "webdriver.edge.driver",
-			        "C:\\drivers\\msedgedriver.exe"
+			        "C:\\Drivers\\msedgedriver.exe"
 			    );
 			EdgeOptions options = new EdgeOptions();
 		    // Custom Edge profile
-		    options.addArguments("user-data-dir=C:\\selenium-profile-edge");
-		    options.addArguments("profile-directory=Default");
+		    //options.addArguments("user-data-dir=C:\\selenium-profile-edge");
+		    //options.addArguments("profile-directory=Default");
 		    // Browser settings
-		    options.addArguments("--start-maximized");
+		    //options.addArguments("--start-maximized");
 		    // Disable automation detection
 		    options.addArguments("--disable-blink-features=AutomationControlled");
 		    options.setExperimentalOption("excludeSwitches",
@@ -98,17 +119,19 @@ public class BaseTest2 {
 		    prefs.put("profile.password_manager_leak_detection", false);
 		    prefs.put("profile.default_content_setting_values.notifications", 2);
 		    options.setExperimentalOption("prefs", prefs);
-		    driver = new EdgeDriver(options);
+		    tlDriver.set(new EdgeDriver(options));
+		    //driver = new EdgeDriver(options);
 		}
 
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		getDriver().manage().window().maximize();
+		//getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		System.out.println("opening URL");
-		driver.get("https://www.saucedemo.com/");
+		getDriver().get("https://www.saucedemo.com/");
 		System.out.println("URL Opened");
-		basePage2 = new BasePage2(driver);
-		homePage2 = new HomePage2(driver);
-		Authenticationpage2 = new AuthenticationPage2(driver);
+		basePage2 = new BasePage2(getDriver());
+		homePage2 = new HomePage2(getDriver());
+		Authenticationpage2 = new AuthenticationPage2(getDriver());
+		
 		// Authenticationpage2.enterEmail("standard_user");
 		// System.out.println("EmailEntered");
 		// Authenticationpage2.enterPassword("secret_sauce");
@@ -122,7 +145,8 @@ public class BaseTest2 {
 
 	@AfterMethod
 	public void tearDown() {
-		driver.quit();
+		 getDriver().quit();
+	        tlDriver.remove();
 	}
 
 	/*********************
@@ -173,5 +197,10 @@ public class BaseTest2 {
 		data[1][1] = "female";
 
 		return data;
+	}
+	@AfterSuite
+	public void flushReport()
+	{
+	    extent1.flush();
 	}
 }
