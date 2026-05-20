@@ -15,28 +15,48 @@ public class TakeScreenShot2 {
    
 
 	
-	    public TakeScreenShot2(WebDriver driver) {
-		// TODO Auto-generated constructor stub
-	}
 
-		public static String screenShot(String testCaseName)
-	            throws IOException
-	    {
-	        TakesScreenshot ts =
-	                (TakesScreenshot) BaseTest2.getDriver();
+	public static String screenShot(String testCaseName)
+    {
 
-	        File source = ts.getScreenshotAs(OutputType.FILE);
+        try
+        {
+            TakesScreenshot ts =
+                    (TakesScreenshot) BaseTest2.getDriver();
 
-	        String destination =
-	                System.getProperty("user.dir")
-	                + "/reports/"
-	                + testCaseName
-	                + ".png";
+            File source =
+                    ts.getScreenshotAs(OutputType.FILE);
 
-	        File finalDestination = new File(destination);
+            File reportDir =
+                    new File(System.getProperty("user.dir")
+                            + "/reports");
 
-	        Files.copy(source, finalDestination);
+            if(!reportDir.exists())
+            {
+                reportDir.mkdirs();
+            }
 
-	        return destination;
-	    }
+            String destination =
+                    System.getProperty("user.dir")
+                    + "/reports/"
+                    + testCaseName
+                    + ".png";
+
+            File finalDestination =
+                    new File(destination);
+
+            Files.copy(source, finalDestination);
+
+            return destination;
+        }
+
+        catch(Exception e)
+        {
+            System.out.println(
+                    "Screenshot failed: "
+                    + e.getMessage());
+
+            return null;
+        }
+    }
 }

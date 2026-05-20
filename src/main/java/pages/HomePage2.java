@@ -134,7 +134,7 @@ public void goToAbout() {
 	        actualUrl,
 	        "https://saucelabs.com/"
 	);
-	driver.navigate().back();
+	//driver.navigate().back();
 	}
 public void goToAbout1() {
 	wait.until(

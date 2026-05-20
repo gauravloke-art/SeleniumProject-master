@@ -8,8 +8,10 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
@@ -59,10 +61,10 @@ public class BaseTest2 {
 		if (browserName.equalsIgnoreCase("chrome")) {
 			ChromeOptions options = new ChromeOptions();
 			// Custom Chrome profile
-			//options.addArguments("user-data-dir=C:\\selenium-profile");
-			//options.addArguments("profile-directory=Default");
+			options.addArguments("user-data-dir=C:\\selenium-profile");
+			options.addArguments("profile-directory=Default");
 			// Browser settings
-			//options.addArguments("--start-maximized");
+			options.addArguments("--start-maximized");
 			// Disable automation detection
 			options.addArguments("--disable-blink-features=AutomationControlled");
 			options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
@@ -103,10 +105,10 @@ public class BaseTest2 {
 			    );
 			EdgeOptions options = new EdgeOptions();
 		    // Custom Edge profile
-		    //options.addArguments("user-data-dir=C:\\selenium-profile-edge");
-		    //options.addArguments("profile-directory=Default");
+		    options.addArguments("user-data-dir=C:\\selenium-profile-edge");
+		    options.addArguments("profile-directory=Default");
 		    // Browser settings
-		    //options.addArguments("--start-maximized");
+		    options.addArguments("--start-maximized");
 		    // Disable automation detection
 		    options.addArguments("--disable-blink-features=AutomationControlled");
 		    options.setExperimentalOption("excludeSwitches",

@@ -1,6 +1,5 @@
 package ss;
 
-import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
 import base.BaseTest2;
@@ -9,12 +8,11 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import report.ExtentReportNG2;
 import screenshot.TakeScreenShot;
 
 import java.io.IOException;
 
-public class Listeners2 extends BaseTest2 implements ITestListener {
+public class Listeners2 implements ITestListener {
 
     //ExtentReports extent = ExtentReportNG2.getReportObject();
 
@@ -25,46 +23,47 @@ public class Listeners2 extends BaseTest2 implements ITestListener {
     public void onTestStart(ITestResult result)
     {
         ExtentTest extentTest2 =
-                extent1.createTest(result.getMethod().getMethodName());
+        		BaseTest2.extent1.createTest(result.getMethod().getMethodName());
 
-        test.set(extentTest2);
+        BaseTest2.test.set(extentTest2);
     }
 
 
     @Override
     public void onTestSuccess(ITestResult result)
     {
-        test.get().pass("Test Passed");
+    	BaseTest2.test.get().pass("Test Passed");
     }
 
 
     @Override
     public void onTestFailure(ITestResult result)
     {
-        test.get().fail(result.getThrowable());
+    	 BaseTest2.test.get().fail(result.getThrowable());
 
-        String filepath;
+    	    String path =
+    	            TakeScreenShot2.screenShot(
+    	                    result.getMethod().getMethodName());
 
-        try
-        {
-            filepath = TakeScreenShot.screenShot(
-                    result.getMethod().getMethodName());
-
-            test.get().addScreenCaptureFromPath(
-                    filepath,
-                    result.getMethod().getMethodName());
-
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+    	    if(path != null)
+    	    {
+    	        try
+    	        {
+    	            BaseTest2.test.get()
+    	                    .addScreenCaptureFromPath(path);
+    	        }
+    	        catch(Exception e)
+    	        {
+    	            System.out.println(
+    	                    "Unable to attach screenshot");
+    	        }
+    	    }
     }
 
 
     @Override
     public void onFinish(ITestContext context)
     {
-        extent1.flush();
+    	BaseTest2.extent1.flush();
     }
 }
