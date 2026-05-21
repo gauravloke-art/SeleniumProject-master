@@ -42,10 +42,10 @@ public class BaseTest2 {
 	public static ExtentReports extent1;
 	public static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 	private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
-	protected BasePage2 basePage2;
-	protected HomePage2 homePage2;
+	//protected BasePage2 basePage2;
+	//protected HomePage2 homePage2;
 	
-	protected AuthenticationPage2 Authenticationpage2;
+	//protected AuthenticationPage2 Authenticationpage2;
 	public static WebDriver getDriver()
     {
         return tlDriver.get();
@@ -61,8 +61,8 @@ public class BaseTest2 {
 		if (browserName.equalsIgnoreCase("chrome")) {
 			ChromeOptions options = new ChromeOptions();
 			// Custom Chrome profile
-			options.addArguments("user-data-dir=C:\\selenium-profile");
-			options.addArguments("profile-directory=Default");
+			//options.addArguments("user-data-dir=C:\\selenium-profile");
+			//options.addArguments("profile-directory=Default");
 			// Browser settings
 			options.addArguments("--start-maximized");
 			// Disable automation detection
@@ -105,8 +105,8 @@ public class BaseTest2 {
 			    );
 			EdgeOptions options = new EdgeOptions();
 		    // Custom Edge profile
-		    options.addArguments("user-data-dir=C:\\selenium-profile-edge");
-		    options.addArguments("profile-directory=Default");
+		    //options.addArguments("user-data-dir=C:\\selenium-profile-edge");
+		    //options.addArguments("profile-directory=Default");
 		    // Browser settings
 		    options.addArguments("--start-maximized");
 		    // Disable automation detection
@@ -126,13 +126,16 @@ public class BaseTest2 {
 		}
 
 		getDriver().manage().window().maximize();
-		//getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		System.out.println("opening URL");
 		getDriver().get("https://www.saucedemo.com/");
 		System.out.println("URL Opened");
-		basePage2 = new BasePage2(getDriver());
-		homePage2 = new HomePage2(getDriver());
-		Authenticationpage2 = new AuthenticationPage2(getDriver());
+	
+
+    	
+		BasePage2 basePage2 = new BasePage2(getDriver());
+		HomePage2 homePage2  = new HomePage2(getDriver());
+		AuthenticationPage2 Authenticationpage2 = new AuthenticationPage2(getDriver());
 		
 		// Authenticationpage2.enterEmail("standard_user");
 		// System.out.println("EmailEntered");
@@ -158,6 +161,8 @@ public class BaseTest2 {
 	 **************************/
 	public void login() throws InterruptedException {
 		// homePage.closePopUp();
+		AuthenticationPage2 Authenticationpage2 =
+    	        new AuthenticationPage2(getDriver());
 		System.out.println("opening URL");
 		// AuthenticationPage2 Authenticationpage2=new AuthenticationPage2();
 		Authenticationpage2.enterEmail("standard_user");

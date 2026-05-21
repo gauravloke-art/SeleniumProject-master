@@ -127,6 +127,9 @@ public void goToAbout() {
 	        ExpectedConditions.visibilityOfElementLocated(menu)
 	        );
 	click(menu);
+	wait.until(
+	        ExpectedConditions.visibilityOfElementLocated(about)
+	        );
 	click(about);
 	String actualUrl = driver.getCurrentUrl();
 
@@ -137,9 +140,21 @@ public void goToAbout() {
 	//driver.navigate().back();
 	}
 public void goToAbout1() {
-	wait.until(
-	        ExpectedConditions.visibilityOfElementLocated(about)
-	        );
+	
+			wait.until(
+			        ExpectedConditions.visibilityOfElementLocated(menu)
+			        );
+			click(menu);
+			wait.until(
+			        ExpectedConditions.visibilityOfElementLocated(about)
+			        );
+			click(about);
+			String actualUrl = driver.getCurrentUrl();
+
+			Assert.assertEquals(
+			        actualUrl,
+			        "https://saucelabs.com/"
+			);
 	}
 ////button[@id='remove-sauce-labs-backpack']
 public void verifyproductIsAvailable() {
