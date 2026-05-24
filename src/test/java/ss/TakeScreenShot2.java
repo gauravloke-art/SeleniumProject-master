@@ -6,7 +6,9 @@ import org.openqa.selenium.WebDriver;
 
 import com.google.common.io.Files;
 
-import base.BaseTest2;
+import base.BaseTest3;
+
+//import base.BaseTest2;
 import java.io.File;
 import java.io.IOException;
 //import base.BaseTest2;
@@ -22,7 +24,7 @@ public class TakeScreenShot2 {
         try
         {
             TakesScreenshot ts =
-                    (TakesScreenshot) BaseTest2.getDriver();
+                    (TakesScreenshot) BaseTest3.getDriver();
 
             File source =
                     ts.getScreenshotAs(OutputType.FILE);

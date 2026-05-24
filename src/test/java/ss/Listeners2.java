@@ -2,7 +2,9 @@ package ss;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import base.BaseTest2;
+import base.BaseTest3;
+
+//import base.BaseTest2;
 
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -23,23 +25,23 @@ public class Listeners2 implements ITestListener {
     public void onTestStart(ITestResult result)
     {
         ExtentTest extentTest2 =
-        		BaseTest2.extent1.createTest(result.getMethod().getMethodName());
+        		BaseTest3.extent1.createTest(result.getMethod().getMethodName());
 
-        BaseTest2.test.set(extentTest2);
+        BaseTest3.test.set(extentTest2);
     }
 
 
     @Override
     public void onTestSuccess(ITestResult result)
     {
-    	BaseTest2.test.get().pass("Test Passed");
+    	BaseTest3.test.get().pass("Test Passed");
     }
 
 
     @Override
     public void onTestFailure(ITestResult result)
     {
-    	 BaseTest2.test.get().fail(result.getThrowable());
+    	 BaseTest3.test.get().fail(result.getThrowable());
 
     	    String path =
     	            TakeScreenShot2.screenShot(
@@ -49,7 +51,7 @@ public class Listeners2 implements ITestListener {
     	    {
     	        try
     	        {
-    	            BaseTest2.test.get()
+    	            BaseTest3.test.get()
     	                    .addScreenCaptureFromPath(path);
     	        }
     	        catch(Exception e)
@@ -64,6 +66,6 @@ public class Listeners2 implements ITestListener {
     @Override
     public void onFinish(ITestContext context)
     {
-    	BaseTest2.extent1.flush();
+    	BaseTest3.extent1.flush();
     }
 }

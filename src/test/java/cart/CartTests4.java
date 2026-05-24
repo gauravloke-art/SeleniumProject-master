@@ -1,12 +1,13 @@
 package cart;
 
 import base.BaseTest2;
+import base.BaseTest3;
 import pages.AuthenticationPage2;
 import pages.HomePage2;
 
 import org.testng.annotations.Test;
 
-public class CartTests4 extends BaseTest2 {
+public class CartTests4 extends BaseTest3 {
 	//HomePage2 homePage2 = new HomePage2(driver);
 	
 	//AuthenticationPage2 Authenticationpage2=new AuthenticationPage2(driver);
